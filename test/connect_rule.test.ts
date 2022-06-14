@@ -1,3 +1,6 @@
+// Copyright 2022 Massimiliano Angelino.
+// SPDX-License-Identifier: Apache-2.0
+
 // import * as cdk from 'aws-cdk-lib';
 // import { Template } from 'aws-cdk-lib/assertions';
 // import * as ConnectRule from '../lib/connect_rule-stack';

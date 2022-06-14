@@ -1,3 +1,6 @@
+// Copyright 2022 Massimiliano Angelino
+// SPDX-License-Identifier: Apache-2.0
+
 import { Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as iot from 'aws-cdk-lib/aws-iot';

@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+// Copyright 2022 Massimiliano Angelino.
+// SPDX-License-Identifier: Apache-2.0
+
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { ConnectRuleStack } from '../lib/connect_rule-stack';
