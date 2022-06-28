@@ -1,6 +1,7 @@
-# Welcome to your CDK TypeScript project
+# Welcome the AWS IoT Connectivy Tracker
 
-This is a blank project for CDK development with TypeScript.
+This project deploys 2 AWS IoT Rules and 1 IAM Role to track device connectivity via device shadows. 
+Tracking is done based on the MQTT `clientId` used for the connection. 
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 

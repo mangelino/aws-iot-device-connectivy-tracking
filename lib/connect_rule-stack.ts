@@ -10,7 +10,7 @@ export class ConnectRuleStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    // The code that defines your stack goes here
+    // Role for republishing to the shadow update topic
     const republishRole = new iam.Role(this, 'republishRole', {
       assumedBy: new iam.ServicePrincipal('iot.amazonaws.com'),
       inlinePolicies: {
@@ -18,7 +18,7 @@ export class ConnectRuleStack extends Stack {
           statements: [
             new iam.PolicyStatement({
               actions: ["iot:Publish"],
-              resources: ["*"],
+              resources: [`arn:${this.partition}:iot:${this.region}:${this.account}:topic/$aws/thing/*/shadow/name/connectivity/update`],
               effect: iam.Effect.ALLOW
             })
           ]
@@ -27,6 +27,7 @@ export class ConnectRuleStack extends Stack {
       
     })
     
+    // Manage connect events
     new iot.CfnTopicRule(this, 'connectRule', {
       topicRulePayload: {
         awsIotSqlVersion: '2016-03-23',
@@ -43,6 +44,7 @@ export class ConnectRuleStack extends Stack {
       }
     })
 
+    // Manage disconnect events
     new iot.CfnTopicRule(this, 'disconnectRule', {
       topicRulePayload: {
         awsIotSqlVersion: '2016-03-23',
@@ -58,9 +60,5 @@ export class ConnectRuleStack extends Stack {
         ]
       }
     })
-    // example resource
-    // const queue = new sqs.Queue(this, 'ConnectRuleQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
   }
 }
