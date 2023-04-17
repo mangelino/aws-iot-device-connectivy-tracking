@@ -18,7 +18,7 @@ export class ConnectRuleStack extends Stack {
           statements: [
             new iam.PolicyStatement({
               actions: ["iot:Publish"],
-              resources: [`arn:${this.partition}:iot:${this.region}:${this.account}:topic/$aws/thing/*/shadow/name/connectivity/update`],
+              resources: [`arn:${this.partition}:iot:${this.region}:${this.account}:topic/$aws/things/*/shadow/name/connectivity/update`],
               effect: iam.Effect.ALLOW
             })
           ]
@@ -31,11 +31,11 @@ export class ConnectRuleStack extends Stack {
     new iot.CfnTopicRule(this, 'connectRule', {
       topicRulePayload: {
         awsIotSqlVersion: '2016-03-23',
-        sql: 'SELECT { "state": { "reported": {"current": eventtype, "connected": timestamp  } } } from \'$aws/events/presence/connected/+\'',
+        sql: 'SELECT { "state": { "reported": {"current": eventType, "connected": timestamp  } } } from \'$aws/events/presence/connected/+\'',
         actions: [
           {
             republish: {
-              topic: "$aws/thing/${clientId}/shadow/name/connectivity/update",
+              topic: "$$aws/things/${clientId}/shadow/name/connectivity/update",
               qos: 1,
               roleArn: republishRole.roleArn
             }
@@ -48,11 +48,11 @@ export class ConnectRuleStack extends Stack {
     new iot.CfnTopicRule(this, 'disconnectRule', {
       topicRulePayload: {
         awsIotSqlVersion: '2016-03-23',
-        sql: 'SELECT { "state": { "reported": {"current": eventtype, "disconnected": timestamp, "reason": disconnectReason, "clientInitiatedDisconnect": clientInitiatedDisconnect  } } } from \'$aws/events/presence/disconnected/+\'',
+        sql: 'SELECT { "state": { "reported": {"current": eventType, "disconnected": timestamp, "reason": disconnectReason, "clientInitiatedDisconnect": clientInitiatedDisconnect  } } } from \'$aws/events/presence/disconnected/+\'',
         actions: [
           {
             republish: {
-              topic: "$aws/thing/${clientId}/shadow/name/connectivity/update",
+              topic: "$$aws/things/${clientId}/shadow/name/connectivity/update",
               qos: 1,
               roleArn: republishRole.roleArn
             }
